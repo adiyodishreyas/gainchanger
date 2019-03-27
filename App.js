@@ -23,7 +23,8 @@ const stackNav = createStackNavigator({
                       <Icon style={{ paddingRight: 20 }} name="ios-menu" size={30} />
                   </TouchableOpacity>
       )
-    })
+    }),
+    key: 'tweet-list-screen'
   }
 });
 
