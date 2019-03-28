@@ -1,12 +1,24 @@
 import React, { PureComponent } from 'react';
-import { StyleSheet, Text, View, FlatList, ActivityIndicator, Alert } from 'react-native';
-import { Card, Icon, Button } from 'react-native-elements';
+import { 
+  Text, 
+  View, 
+  FlatList, 
+  ActivityIndicator ,
+  Image
+} from 'react-native';
+import { 
+  Card, 
+  ListItem
+} from 'react-native-elements';
 
 export default class TweetListScreen extends PureComponent {
   
   constructor(props){
     super(props);
-    this.state = { isLoading: false, tweets: [] };
+    this.state = { 
+      isLoading: false, 
+      tweets: [] 
+    };
   }
 
   fetchTweets(keyword) {
@@ -41,22 +53,31 @@ export default class TweetListScreen extends PureComponent {
   }
 
   renderTweet = (tweet) => {
-    console.log('tweet', tweet);
     const { item } = tweet;
-    const { text } = item;
+    const { text, entities, user } = item;
+
+    const { media } = entities;
+    const imageUrl =  media && media.length > 0 ? media[0].media_url_https : null;
 
     return ( 
-      <Card
-        title='Tweet'
-        >
+      <Card>
+        <ListItem 
+          title={user.name}
+          subtitle={`@${user.screen_name}`}
+          leftAvatar={{ source: { uri: user.profile_image_url_https } }}
+        />
+        {imageUrl && 
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginBottom: 20 }}>
+            <Image 
+              resizeMode={'cover'}
+              style={{ width: 200, height: 200 }}
+              source= {{ uri: imageUrl }}
+            />
+          </View>
+        }
         <Text style={{marginBottom: 10}}>
           { text }
         </Text>
-        <Button
-          icon={<Icon name='code' color='#ffffff' />}
-          backgroundColor='#03A9F4'
-          buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-          title='VIEW' />
       </Card>
     );
   }
