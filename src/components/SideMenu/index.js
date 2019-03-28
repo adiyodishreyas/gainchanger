@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -10,7 +10,7 @@ import * as Animatable from 'react-native-animatable';
 import Accordion from 'react-native-collapsible/Accordion';
 import { NavigationActions, StackActions } from 'react-navigation';
  
-export default class SideMenu extends Component {
+export default class SideMenu extends PureComponent {
   state = {
     activeSections: [],
   }
