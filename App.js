@@ -18,9 +18,13 @@ const stackNav = createStackNavigator({
   TweetListScreen : {
     screen: TweetListScreen,
     navigationOptions: ({navigation}) => ({
-      title: "Tweets",
+      title: navigation.getParam('name', '') + ' Tweets',
+      headerTintColor: '#fff',
+      headerStyle: {
+        backgroundColor: '#55acee',
+      },
       headerRight:(<TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.toggleDrawer()) }>
-                      <Icon style={{ paddingRight: 20 }} name="ios-menu" size={30} />
+                      <Icon style={{ paddingRight: 20, color: '#fff' }} name="ios-menu" size={30} />
                   </TouchableOpacity>
       )
     }),

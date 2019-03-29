@@ -4,7 +4,8 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity
+  TouchableOpacity,
+  SafeAreaView
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import Accordion from 'react-native-collapsible/Accordion';
@@ -45,11 +46,12 @@ export default class SideMenu extends PureComponent {
     this.fetchTweets( keyword );
   }
 
-  fetchTweets = ( keyword ) => {
+  fetchTweets = ( {id, val} ) => {
     const navigateAction = NavigationActions.navigate({
       routeName: 'TweetListScreen',
       params: {
-        keyword
+        keyword: id,
+        name: val
       }
     });
 
@@ -69,7 +71,7 @@ export default class SideMenu extends PureComponent {
         {section.subcategory.map((item, key) => (
           <View key={key} style={styles.item}>
             <TouchableOpacity
-              onPress={() => this.onKeywordPress(item.id)}>
+              onPress={() => this.onKeywordPress(item)}>
               <ListItem
                 key={key}
                 title={item.val}
@@ -82,20 +84,23 @@ export default class SideMenu extends PureComponent {
       </Animatable.View>
     );
   }
+
+  renderSideMenuHeader() {
+    return (
+      <View style={{ backgroundColor: '#55acee', height: 300, alignItems: 'center', justifyContent: 'center' }}>
+        <Icon 
+          name={'twitter'}
+          color={'white'}
+          size={75}
+        />
+      </View>
+    );
+  }
  
   render() {
     return (
       <View style={styles.container}>
-        <Text
-          style={{
-            paddingTop: 30,
-            paddingBottom: 10,
-            paddingLeft: 10,
-            fontSize: 20,
-            textAlign: 'center',
-          }}>
-          Categories
-        </Text>
+        {this.renderSideMenuHeader()}
         <ScrollView contentContainerStyle={{}}>
           <Accordion
             activeSections={this.state.activeSections}
@@ -117,7 +122,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F5FCFF',
-    paddingTop: 10,
   },
   header: {
     backgroundColor: '#F5FCFF'

@@ -89,7 +89,7 @@ export default class TweetListScreen extends PureComponent {
 
     if(this.state.isLoading) {
       return(
-        <View style={{flex: 1, padding: 20}}>
+        <View style={{flex: 1, padding: 20, backgroundColor: '#F5FCFF'}}>
           <ActivityIndicator size="large" color="#0000ff" />
         </View>
       )
@@ -97,7 +97,7 @@ export default class TweetListScreen extends PureComponent {
     else {
       if( this.state.tweets.length === 0 ) {
         return ( 
-          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#F5FCFF' }}>
             <Button
               onPress={() => this.props.navigation.dispatch(DrawerActions.toggleDrawer())}
               titleStyle={{ padding: 10 }}
@@ -117,7 +117,7 @@ export default class TweetListScreen extends PureComponent {
     }
 
     return(
-      <View style={{flex: 1, paddingTop:20}}>
+      <View style={{flex: 1, paddingTop:20, backgroundColor: '#F5FCFF' }}>
         <FlatList
           data={this.state.tweets}
           renderItem={this.renderTweet}
