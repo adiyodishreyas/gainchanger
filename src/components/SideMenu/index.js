@@ -9,6 +9,10 @@ import {
 import * as Animatable from 'react-native-animatable';
 import Accordion from 'react-native-collapsible/Accordion';
 import { NavigationActions, StackActions } from 'react-navigation';
+import {
+  ListItem
+} from 'react-native-elements';
+import Icon from 'react-native-vector-icons/FontAwesome5';
  
 export default class SideMenu extends PureComponent {
   state = {
@@ -25,9 +29,13 @@ export default class SideMenu extends PureComponent {
     return (
       <Animatable.View
         duration={400}
-        style={[styles.header, isActive ? styles.active : styles.inactive]}
         transition="backgroundColor">
-        <Text style={styles.headerText}>{section.category_name}</Text>
+        <ListItem 
+          containerStyle={[styles.header, isActive ? styles.active : styles.inactive]}
+          title={section.category_name}
+          bottomDivider={true}  
+          leftIcon={() => <Icon name={section.icon} /> }
+        />
       </Animatable.View>
     );
   }
@@ -62,13 +70,13 @@ export default class SideMenu extends PureComponent {
           <View key={key} style={styles.item}>
             <TouchableOpacity
               onPress={() => this.onKeywordPress(item.id)}>
-              <Text
-                style={styles.text}
-                animation={isActive ? 'bounceIn' : undefined}>
-                { item.val }
-              </Text>
-            </TouchableOpacity>
-            <View style={styles.separator} />
+              <ListItem
+                key={key}
+                title={item.val}
+                bottomDivider={true}
+                leftIcon={() => <Icon name={item.icon} /> }
+              />
+            </TouchableOpacity>           
           </View>
         ))}
       </Animatable.View>
@@ -112,12 +120,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   header: {
-    backgroundColor: '#F5FCFF',
-    padding: 16,
-  },
-  headerText: {
-    fontSize: 16,
-    fontWeight: '500',
+    backgroundColor: '#F5FCFF'
   },
   content: {
     paddingBottom: 10,
@@ -131,13 +134,6 @@ const styles = StyleSheet.create({
   inactive: {
     backgroundColor: 'rgba(245,252,255,1)',
   },
-  separator: {
-    height: 0.5,
-    backgroundColor: '#808080',
-    width: '90%',
-    marginLeft: 16,
-    marginRight: 16,
-  },
   text: {
     fontSize: 16,
     color: '#606070',
@@ -148,10 +144,12 @@ const styles = StyleSheet.create({
 const SECTIONS = [
   {
     category_name: 'Animals',
-    subcategory: [{ id: 'dogs', val: 'Dogs' }, { id: 'cats', val: 'Cats' }],
+    icon: 'paw',
+    subcategory: [{ id: 'dogs', val: 'Dogs', icon: 'dog' }, { id: 'cats', val: 'Cats', icon: 'cat' }],
   },
   {
     category_name: 'Sports',
-    subcategory: [{ id: 'soccer', val: 'Soccer' }, { id: 'basketball', val: 'Basketball' }],
+    icon: 'running',
+    subcategory: [{ id: 'soccer', val: 'Soccer', icon: 'futbol' }, { id: 'basketball', val: 'Basketball', icon: 'basketball-ball' }],
   }
 ];
