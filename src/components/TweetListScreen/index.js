@@ -8,8 +8,11 @@ import {
 } from 'react-native';
 import { 
   Card, 
-  ListItem
+  ListItem,
+  Button
 } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+import { DrawerActions } from 'react-navigation';
 
 export default class TweetListScreen extends PureComponent {
   
@@ -83,12 +86,34 @@ export default class TweetListScreen extends PureComponent {
   }
 
   render() {
+
     if(this.state.isLoading) {
       return(
         <View style={{flex: 1, padding: 20}}>
           <ActivityIndicator size="large" color="#0000ff" />
         </View>
       )
+    }
+    else {
+      if( this.state.tweets.length === 0 ) {
+        return ( 
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <Button
+              onPress={() => this.props.navigation.dispatch(DrawerActions.toggleDrawer())}
+              titleStyle={{ padding: 10 }}
+              containerStyle={{ backgroundColor: '#55acee' }}
+              icon={
+                <Icon
+                  name="twitter"
+                  size={15}
+                  color="white"
+                />
+              }
+              title="Find Tweets"
+            />
+          </View>
+        )
+      }
     }
 
     return(
