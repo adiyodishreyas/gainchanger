@@ -15,6 +15,7 @@ import {
   ListItem
 } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import Ionicons from 'react-native-vector-icons/Ionicons';
  
 export default class SideMenu extends PureComponent {
   state = {
@@ -93,8 +94,8 @@ export default class SideMenu extends PureComponent {
   renderSideMenuHeader() {
     return (
       <View style={styles.sideMenuHeaderContainer}>
-        <Icon 
-          name={'twitter'}
+        <Ionicons 
+          name={'logo-twitter'}
           color={'white'}
           size={75}
         />

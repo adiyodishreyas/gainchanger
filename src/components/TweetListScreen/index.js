@@ -5,7 +5,8 @@ import {
   FlatList, 
   ActivityIndicator,
   Image,
-  StyleSheet
+  StyleSheet,
+  SafeAreaView
 } from 'react-native';
 import { 
   Card, 
@@ -127,6 +128,7 @@ export default class TweetListScreen extends PureComponent {
   renderTweetList() {
     return(
       <FlatList
+        contentContainerStyle={{ paddingBottom: 40 }}
         style={styles.tweetListContainer}
         data={this.state.tweets}
         renderItem={this.renderTweet}
@@ -150,7 +152,7 @@ export default class TweetListScreen extends PureComponent {
 const styles = StyleSheet.create({
   container: {
     flex: 1, 
-    backgroundColor: '#F5FCFF' 
+    backgroundColor: '#F5FCFF'
   },
   loader: {
     flex: 1, 
