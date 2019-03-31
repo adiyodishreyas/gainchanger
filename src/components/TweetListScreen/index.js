@@ -3,7 +3,7 @@ import {
   Text, 
   View, 
   FlatList, 
-  ActivityIndicator ,
+  ActivityIndicator,
   Image
 } from 'react-native';
 import { 
@@ -104,12 +104,12 @@ export default class TweetListScreen extends PureComponent {
               containerStyle={{ backgroundColor: '#55acee' }}
               icon={
                 <Icon
-                  name="twitter"
+                  name="search"
                   size={15}
                   color="white"
                 />
               }
-              title="Find Tweets"
+              title="Discover"
             />
           </View>
         )

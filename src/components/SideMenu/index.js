@@ -2,10 +2,8 @@ import React, { PureComponent } from 'react';
 import {
   ScrollView,
   StyleSheet,
-  Text,
   View,
-  TouchableOpacity,
-  SafeAreaView
+  TouchableOpacity
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import Accordion from 'react-native-collapsible/Accordion';
@@ -18,6 +16,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 export default class SideMenu extends PureComponent {
   state = {
     activeSections: [],
+    activeSubSection: {}
   }
  
   setActiveSections = sections => {
@@ -32,7 +31,7 @@ export default class SideMenu extends PureComponent {
         duration={400}
         transition="backgroundColor">
         <ListItem 
-          containerStyle={[styles.header, isActive ? styles.active : styles.inactive]}
+          containerStyle={styles.header}
           title={section.category_name}
           bottomDivider={true}  
           leftIcon={() => <Icon name={section.icon} /> }
@@ -41,17 +40,19 @@ export default class SideMenu extends PureComponent {
     );
   }
 
-  onKeywordPress = (keyword) => {
+  onKeywordPress = (item) => {
     this.props.navigation.closeDrawer();
-    this.fetchTweets( keyword );
+    this.setState({ activeSubSection: item });
+    this.fetchTweetsAction( item );
   }
 
-  fetchTweets = ( {id, val} ) => {
+  fetchTweetsAction = ( {id, val, icon} ) => {
     const navigateAction = NavigationActions.navigate({
       routeName: 'TweetListScreen',
       params: {
         keyword: id,
-        name: val
+        name: val,
+        icon: icon
       }
     });
 
@@ -66,16 +67,17 @@ export default class SideMenu extends PureComponent {
     return (
       <Animatable.View
         duration={400}
-        style={[styles.content, isActive ? styles.active : styles.inactive]}
-        transition="backgroundColor">
+        style={styles.content}>
         {section.subcategory.map((item, key) => (
-          <View key={key} style={styles.item}>
+          <View key={key}>
             <TouchableOpacity
               onPress={() => this.onKeywordPress(item)}>
               <ListItem
+                containerStyle={styles.subSectionStyle}
                 key={key}
                 title={item.val}
                 bottomDivider={true}
+                checkmark={this.state.activeSubSection ? item.id === this.state.activeSubSection.id : false}
                 leftIcon={() => <Icon name={item.icon} /> }
               />
             </TouchableOpacity>           
@@ -87,7 +89,7 @@ export default class SideMenu extends PureComponent {
 
   renderSideMenuHeader() {
     return (
-      <View style={{ backgroundColor: '#55acee', height: 300, alignItems: 'center', justifyContent: 'center' }}>
+      <View style={styles.sideMenuHeaderContainer}>
         <Icon 
           name={'twitter'}
           color={'white'}
@@ -121,28 +123,23 @@ export default class SideMenu extends PureComponent {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#F5FCFF'
   },
   header: {
     backgroundColor: '#F5FCFF'
   },
   content: {
-    paddingBottom: 10,
-    paddingLeft: 10,
-    paddingRight: 10,
-    backgroundColor: '#fff',
+    backgroundColor: '#FFF',
   },
-  active: {
-    backgroundColor: 'rgba(255,255,255,1)',
-  },
-  inactive: {
-    backgroundColor: 'rgba(245,252,255,1)',
-  },
-  text: {
-    fontSize: 16,
-    color: '#606070',
-    padding: 10,
-  },
+  subSectionStyle: {
+    paddingLeft: 25
+  },  
+  sideMenuHeaderContainer: { 
+    backgroundColor: '#55ACEE', 
+    height: 300, 
+    alignItems: 'center', 
+    justifyContent: 'center' 
+  }
 });
  
 const SECTIONS = [
