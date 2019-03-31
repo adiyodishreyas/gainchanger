@@ -63,32 +63,40 @@ export default class TweetListScreen extends PureComponent {
     const { media } = entities;
     const imageUrl =  media && media.length > 0 ? media[0].media_url_https : null;
 
-    return ( 
-      <Card>
-        <ListItem 
+    const userAvatarComponent = (
+      <ListItem 
           title={user.name}
           subtitle={`@${user.screen_name}`}
           leftAvatar={{ source: { uri: user.profile_image_url_https } }}
         />
-        {imageUrl && 
-          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginBottom: 20 }}>
-            <Image 
-              resizeMode={'cover'}
-              style={{ width: 200, height: 200 }}
-              source= {{ uri: imageUrl }}
-            />
-          </View>
-        }
-        <Text style={{marginBottom: 10}}>
-          { text }
-        </Text>
+    );
+    const tweetTextComponent = (
+      <Text style={{marginBottom: 10}}>
+        { text }
+      </Text>
+    );
+
+    const imageComponent = (
+      <View style={{ flex: 1, alignItems: 'center', marginBottom: 20 }}>
+        <Image 
+          style={{ width: 200, height: 200 }}
+          source= {{ uri: imageUrl }}
+        />
+      </View>
+    );
+
+    return ( 
+      <Card>
+        { userAvatarComponent }
+        { imageUrl && imageComponent }
+        { tweetTextComponent }
       </Card>
     );
   }
 
   renderLoader() {
     return(
-      <View style={styles.loader}>
+      <View style={styles.centerContainer}>
         <ActivityIndicator size="large" color="#0000ff" />
       </View>
     );
@@ -96,7 +104,7 @@ export default class TweetListScreen extends PureComponent {
 
   renderDiscoverButton() {
     return ( 
-      <View style={styles.discoverContainer}>
+      <View style={styles.centerContainer}>
         <Button
           onPress={() => this.props.navigation.dispatch(DrawerActions.toggleDrawer())}
           titleStyle={{ padding: 10 }}
@@ -147,7 +155,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center', 
     alignItems: 'center'
   },
-  discoverContainer: { 
+  centerContainer: { 
     flex: 1, 
     justifyContent: 'center', 
     alignItems: 'center'

@@ -6,9 +6,17 @@
  * @flow
  */
 
-import React, {Component} from 'react';
-import { Dimensions, TouchableOpacity, View, Text } from 'react-native';
-import { createStackNavigator, createDrawerNavigator, createAppContainer, DrawerActions } from 'react-navigation';
+import React from 'react';
+import { 
+  Dimensions, 
+  TouchableOpacity 
+} from 'react-native';
+import { 
+  createStackNavigator, 
+  createDrawerNavigator, 
+  createAppContainer, 
+  DrawerActions 
+} from 'react-navigation';
 import Icon from "react-native-vector-icons/Ionicons";
 
 import SideMenu from './src/components/SideMenu';
@@ -19,12 +27,12 @@ const stackNav = createStackNavigator({
     screen: TweetListScreen,
     navigationOptions: ({navigation}) => ({
       title: navigation.getParam('name', '') + ' Tweets',
-      headerTintColor: '#fff',
+      headerTintColor: '#FFF',
       headerStyle: {
         backgroundColor: '#55ACEE',
       },
       headerRight:(<TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.toggleDrawer()) }>
-                      <Icon style={{ paddingRight: 20, color: '#fff' }} name="ios-menu" size={30} />
+                      <Icon style={{ paddingRight: 20, color: '#FFF' }} name="ios-menu" size={30} />
                   </TouchableOpacity>
       )
     }),

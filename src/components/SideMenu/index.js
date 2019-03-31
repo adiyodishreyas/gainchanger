@@ -7,7 +7,10 @@ import {
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import Accordion from 'react-native-collapsible/Accordion';
-import { NavigationActions, StackActions } from 'react-navigation';
+import { 
+  NavigationActions, 
+  StackActions 
+} from 'react-navigation';
 import {
   ListItem
 } from 'react-native-elements';
