@@ -77,9 +77,11 @@ export default class TweetListScreen extends PureComponent {
     );
 
     const imageComponent = (
-      <View style={{ flex: 1, alignItems: 'center', marginBottom: 20 }}>
+      <View style={{ flex: 1, alignItems: 'center', marginBottom: 20, width: '100%', height: 300 }}>
         <Image 
-          style={{ width: 200, height: 200 }}
+          resizeMode={'cover'}
+          style={{ flex: 1 }}
+          style={{ width: '100%', height: '100%' }}
           source= {{ uri: imageUrl }}
         />
       </View>
