@@ -4,7 +4,8 @@ import {
   View, 
   FlatList, 
   ActivityIndicator,
-  Image
+  Image,
+  StyleSheet
 } from 'react-native';
 import { 
   Card, 
@@ -40,11 +41,11 @@ export default class TweetListScreen extends PureComponent {
     return fetch(searchApi, options)
     .then((response) => response.json())
     .then((responseJson) => {
-      console.log(responseJson);
       this.setState({ isLoading: false, tweets: responseJson.statuses });
     })
     .catch((error) => {
       console.error(error);
+      this.setState({ isLoading: false, tweets: [] });
     });  
   }
 
@@ -85,45 +86,73 @@ export default class TweetListScreen extends PureComponent {
     );
   }
 
-  render() {
-
-    if(this.state.isLoading) {
-      return(
-        <View style={{flex: 1, padding: 20, backgroundColor: '#F5FCFF'}}>
-          <ActivityIndicator size="large" color="#0000ff" />
-        </View>
-      )
-    }
-    else {
-      if( this.state.tweets.length === 0 ) {
-        return ( 
-          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#F5FCFF' }}>
-            <Button
-              onPress={() => this.props.navigation.dispatch(DrawerActions.toggleDrawer())}
-              titleStyle={{ padding: 10 }}
-              containerStyle={{ backgroundColor: '#55acee' }}
-              icon={
-                <Icon
-                  name="search"
-                  size={15}
-                  color="white"
-                />
-              }
-              title="Discover"
-            />
-          </View>
-        )
-      }
-    }
-
+  renderLoader() {
     return(
-      <View style={{flex: 1, paddingTop:20, backgroundColor: '#F5FCFF' }}>
-        <FlatList
-          data={this.state.tweets}
-          renderItem={this.renderTweet}
-          keyExtractor={({id_str}, index) => id_str}
+      <View style={styles.loader}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
+  }
+
+  renderDiscoverButton() {
+    return ( 
+      <View style={styles.discoverContainer}>
+        <Button
+          onPress={() => this.props.navigation.dispatch(DrawerActions.toggleDrawer())}
+          titleStyle={{ padding: 10 }}
+          containerStyle={{ backgroundColor: '#55ACEE' }}
+          icon={
+            <Icon
+              name="search"
+              size={15}
+              color="white"
+            />
+          }
+          title="Discover"
         />
+      </View>
+    )
+  }
+
+  renderTweetList() {
+    return(
+      <FlatList
+        style={styles.tweetListContainer}
+        data={this.state.tweets}
+        renderItem={this.renderTweet}
+        keyExtractor={({id_str}, index) => id_str}
+      />
+    );
+  }
+
+  render() {
+    const { isLoading, tweets } = this.state;
+    return (
+      <View style={styles.container}>
+        { isLoading && this.renderLoader() }
+        { !isLoading && tweets.length === 0 && this.renderDiscoverButton() }
+        { !isLoading && tweets.length > 0 && this.renderTweetList() }
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1, 
+    backgroundColor: '#F5FCFF' 
+  },
+  loader: {
+    flex: 1, 
+    justifyContent: 'center', 
+    alignItems: 'center'
+  },
+  discoverContainer: { 
+    flex: 1, 
+    justifyContent: 'center', 
+    alignItems: 'center'
+  },
+  tweetListContainer: {
+    paddingTop: 20
+  }
+});

@@ -7,7 +7,7 @@
  */
 
 import React, {Component} from 'react';
-import { Dimensions, TouchableOpacity } from 'react-native';
+import { Dimensions, TouchableOpacity, View, Text } from 'react-native';
 import { createStackNavigator, createDrawerNavigator, createAppContainer, DrawerActions } from 'react-navigation';
 import Icon from "react-native-vector-icons/Ionicons";
 
@@ -21,7 +21,7 @@ const stackNav = createStackNavigator({
       title: navigation.getParam('name', '') + ' Tweets',
       headerTintColor: '#fff',
       headerStyle: {
-        backgroundColor: '#55acee',
+        backgroundColor: '#55ACEE',
       },
       headerRight:(<TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.toggleDrawer()) }>
                       <Icon style={{ paddingRight: 20, color: '#fff' }} name="ios-menu" size={30} />
